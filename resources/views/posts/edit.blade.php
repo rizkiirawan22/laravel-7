@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title'=> 'New Post'])
+@extends('layouts.app', ['title'=> 'Update Post'])
 
 @section('content')
 
@@ -6,11 +6,12 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card mx-2">
-                <div class="card-header">New Post</div>
+                <div class="card-header">Update Post: {{$post->title}}</div>
                     <div class="card-body">
-                        <form action="/posts/store" method="post">
+                        <form action="/posts/{{$post->slug}}/edit" method="post">
+                            @method('patch')
                             @csrf
-                            @include('posts.partials.form-control', ['submit' => 'Create'])
+                            @include('posts.partials.form-control')
                         </form>
                     </div>
                 </div>

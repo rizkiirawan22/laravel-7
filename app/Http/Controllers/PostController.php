@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $post = Post::latest()->simplePaginate(4);
+        $post = Post::latest()->simplePaginate(3);
         return view('posts.index', ['posts' => $post]);
     }
 
@@ -20,30 +20,36 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create', ['post' => New Post()]);
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        // $post = new Post();
-        // $post->title = $request->title;
-        // $post->slug = \Str::slug($request->title);
-        // $post->body = $request->body;
-        // $post->save();
-        // return \redirect()->to('posts');
-        // Post::create([
-        //     'title' => $request->title,
-        //     'slug' => \Str::slug($request->title),
-        //     'body' => $request->body
-        // ]);
-
-        $attr = $request->validate([
-            'title' => 'required|min:3',
-            'body' => 'required'
-        ]);
-
+        $attr = $request->all();
         $attr['slug'] = \Str::slug($request->title);
         Post::create($attr);
-        return back();
+
+        session()->flash('success', 'The post was created');
+        // return back();
+        return redirect('posts');
+    }
+
+    public function edit(Post $post){
+        return view('posts.edit',compact('post'));
+        
+    }
+
+    public function update(PostRequest $request, Post $post){
+        $attr = $request->all();
+        $post->update($attr);
+        session()->flash('success', 'The post was created');
+        // return back();
+        return redirect('posts');
+    }
+
+    public function destroy(Post $post){
+        $post->delete();
+        session()->flash('success', 'The post has destroyed');
+        return redirect('posts');
     }
 }
