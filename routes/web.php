@@ -22,6 +22,7 @@ Route::post('posts/store', 'App\Http\Controllers\PostController@store');
 Route::get('posts/{post:slug}/edit', 'App\Http\Controllers\PostController@edit');
 Route::patch('posts/{post:slug}/edit', 'App\Http\Controllers\PostController@update');
 Route::delete('posts/{post:slug}/delete', 'App\Http\Controllers\PostController@destroy');
+Route::get('categories/{category:slug}', 'App\Http\Controllers\CategoryController@show');
 Route::get('posts/{post:slug}', 'App\Http\Controllers\PostController@show');
 
 Route::view('contact', 'contact');

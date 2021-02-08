@@ -23,9 +23,10 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
+            'category_id' => rand(1,2),
             'title' => $this->faker->sentence(),
             'slug' => Str::slug($this->faker->sentence()),
-            'body' => $this->faker->paragraph(2)
+            'body' => $this->faker->paragraph(10)
         ];
     }
 }
