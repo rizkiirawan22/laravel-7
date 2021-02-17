@@ -9,10 +9,6 @@ use App\Models\Tag;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index()
     {
         $post = Post::latest()->simplePaginate(6);
